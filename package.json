@@ -8,12 +8,14 @@
   "license": "Apache License 2.0",
   "private": true,
   "dependencies": {
+    "@types/vision": "^5.3.6",
     "dotenv-safe": "^6.1.0",
     "good": "^8.1.2",
     "good-console": "^8.0.0",
     "good-squeeze": "^5.1.0",
     "hapi": "^18.1.0",
-    "hapi-alive": "^2.0.1"
+    "hapi-alive": "^2.0.1",
+    "vision": "^5.4.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",

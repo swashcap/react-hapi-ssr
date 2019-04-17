@@ -5,6 +5,7 @@ dotenvSafe.config()
 import good from 'good'
 import hapi from 'hapi'
 import hapiAlive from 'hapi-alive'
+import vision from 'vision'
 
 const init = async () => {
   const server = new hapi.Server({
@@ -35,9 +36,7 @@ const init = async () => {
     })
   }
 
-  await server.register({
-    plugin: hapiAlive,
-  })
+  await Promise.all([hapiAlive, vision].map(plugin => server.register(plugin)))
 
   await server.start()
 

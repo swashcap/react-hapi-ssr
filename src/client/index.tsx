@@ -1,8 +1,10 @@
 import React from 'react'
 import { render } from 'react-dom'
 
+import { App } from './App'
+
 const el = document.getElementById('app')
 
 if (el) {
-  render(<h1>Hello, world!</h1>, el)
+  render(<App />, el)
 }

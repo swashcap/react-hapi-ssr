@@ -14,6 +14,8 @@ import path from 'path'
 import intoStream from 'into-stream'
 import stream from 'stream'
 
+import { App } from '../client/App'
+
 const init = async () => {
   const server = new hapi.Server({
     port: process.env.PORT,
@@ -54,9 +56,7 @@ const init = async () => {
       multistream([
         fs.createReadStream(path.join(__dirname, 'views/partials/header.html')),
         intoStream('<div id="app">'),
-        ReactDOMServer.renderToNodeStream(
-          React.createElement('h1', undefined, 'Hello, world!'),
-        ),
+        ReactDOMServer.renderToNodeStream(React.createElement(App)),
         intoStream('</div>'),
         fs.createReadStream(path.join(__dirname, 'views/partials/footer.html')),
       ]).pipe(pass)

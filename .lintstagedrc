@@ -1,3 +1,3 @@
 {
-  ".js": ["yarn format", "git add"]
+  "{.js,src/**/*.ts}": ["yarn format", "git add"]
 }

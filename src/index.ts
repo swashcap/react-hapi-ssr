@@ -1,9 +1,12 @@
+import dotenvSafe from 'dotenv-safe'
+
+dotenvSafe.config()
+
 import hapi from 'hapi'
 
 const init = async () => {
   const server = new hapi.Server({
-    host: 'localhost',
-    port: 3000,
+    port: process.env.PORT
   })
 
   await server.start()

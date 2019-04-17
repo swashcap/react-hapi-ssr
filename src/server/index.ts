@@ -14,7 +14,7 @@ import path from 'path'
 import intoStream from 'into-stream'
 import stream from 'stream'
 
-import { App } from '../client/App'
+import { App } from '../common/App'
 
 const init = async () => {
   const server = new hapi.Server({

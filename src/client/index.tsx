@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { App } from './App'
+import { App } from '../common/App'
 
 const el = document.getElementById('app')
 

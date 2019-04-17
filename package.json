@@ -37,7 +37,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "find src -type f \\( -name '*.js' -o -name '*.map' \\) -exec rm {} \\+",
-    "format": "prettier --write '*.js' '{src,types}/**/*.ts'",
+    "format": "prettier --write '*.js' '{src,types}/**/*.{ts,tsx}'",
     "start": "node src/server/index.js",
     "watch": "tsc -w --preserveWatchOutput"
   }

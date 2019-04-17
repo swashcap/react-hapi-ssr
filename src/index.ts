@@ -1,3 +1,4 @@
+import 'loud-rejection/register'
 import dotenvSafe from 'dotenv-safe'
 
 dotenvSafe.config()

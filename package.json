@@ -15,6 +15,7 @@
     "good-squeeze": "^5.1.0",
     "hapi": "^18.1.0",
     "hapi-alive": "^2.0.1",
+    "loud-rejection": "^2.1.0",
     "vision": "^5.4.4"
   },
   "devDependencies": {

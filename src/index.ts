@@ -4,6 +4,7 @@ dotenvSafe.config()
 
 import good from 'good'
 import hapi from 'hapi'
+import hapiAlive from 'hapi-alive'
 
 const init = async () => {
   const server = new hapi.Server({
@@ -33,6 +34,10 @@ const init = async () => {
       },
     })
   }
+
+  await server.register({
+    plugin: hapiAlive,
+  })
 
   await server.start()
 

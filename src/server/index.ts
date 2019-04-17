@@ -6,12 +6,21 @@ dotenvSafe.config()
 import good from 'good'
 import hapi from 'hapi'
 import hapiAlive from 'hapi-alive'
+import inert from 'inert'
+import path from 'path'
 
-import { ssr } from './routes/ssr'
+import { publicDir } from './routes/public-dir'
+import { ssr } from './plugins/ssr'
+import { render } from './views/app'
 
 const init = async () => {
   const server = new hapi.Server({
     port: process.env.PORT,
+    routes: {
+      files: {
+        relativeTo: path.join(__dirname, '../../public'),
+      },
+    },
   })
 
   if (process.env.NODE !== 'test') {
@@ -38,9 +47,31 @@ const init = async () => {
     })
   }
 
-  await server.register(hapiAlive)
+  await Promise.all([
+    server.register(hapiAlive),
+    server.register(inert),
+    server.register(ssr),
+  ])
 
-  server.route(ssr)
+  server.route(publicDir)
+
+  /**
+   * Custom 404 page:
+   * {@link https://github.com/hapijs/inert#customized-file-response}
+   */
+  server.ext('onPreResponse', (request, h) => {
+    const { response } = request
+
+    if (
+      'isBoom' in response &&
+      response.isBoom &&
+      response.output.statusCode === 404
+    ) {
+      return h.response(render(request)).code(404)
+    }
+
+    return h.continue
+  })
 
   await server.start()
 

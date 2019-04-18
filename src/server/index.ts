@@ -11,6 +11,7 @@ import path from 'path'
 
 import { publicDir } from './routes/public-dir'
 import { ssr } from './plugins/ssr'
+import { webpackPlugin } from './plugins/webpack'
 import { render } from './views/app'
 
 const init = async () => {
@@ -51,6 +52,9 @@ const init = async () => {
     server.register(hapiAlive),
     server.register(inert),
     server.register(ssr),
+    process.env.NODE_ENV === 'development'
+      ? server.register(webpackPlugin)
+      : undefined,
   ])
 
   server.route(publicDir)
@@ -67,7 +71,10 @@ const init = async () => {
       response.isBoom &&
       response.output.statusCode === 404
     ) {
-      return h.response(render(request)).code(404)
+      return h
+        .response(render(request))
+        .code(404)
+        .type('text/html')
     }
 
     return h.continue

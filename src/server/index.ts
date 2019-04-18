@@ -12,9 +12,8 @@ import path from 'path'
 import { publicDir } from './routes/public-dir'
 import { ssr } from './plugins/ssr'
 import { webpackPlugin } from './plugins/webpack'
-import { render } from './views/app'
 
-const init = async () => {
+export const getServer = async () => {
   const server = new hapi.Server({
     port: process.env.PORT,
     routes: {
@@ -59,9 +58,13 @@ const init = async () => {
 
   server.route(publicDir)
 
-  await server.start()
-
-  console.log('Server running on', server.info.uri)
+  return server
 }
 
-init()
+if (require.main === module) {
+  getServer()
+    .then(server => Promise.all([server, server.start()]))
+    .then(([server]) => {
+      console.log('Server running on', server.info.uri)
+    })
+}

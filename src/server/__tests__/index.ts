@@ -8,3 +8,10 @@ test('server renders', async () => {
   expect(response.statusCode).toBe(200)
   expect(response.payload).toBeTruthy()
 })
+
+test('health endpoint', async () => {
+  const server = await getServer()
+  const response = await server.inject('/health')
+  expect(response.statusCode).toBe(200)
+  expect(response.payload).toBe("I'm healthy!!!")
+})

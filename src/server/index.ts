@@ -11,6 +11,7 @@ import path from 'path'
 
 import { publicDir } from './routes/public-dir'
 import { ssr } from './plugins/ssr'
+import { developmentHotReloadPlugin } from './plugins/development-hot-reload'
 import { developmentWebpackPlugin } from './plugins/development-webpack'
 
 export const getServer = async () => {
@@ -56,6 +57,12 @@ export const getServer = async () => {
           webpackConfig: require('../../webpack.config'),
         },
         plugin: developmentWebpackPlugin,
+      },
+      {
+        options: {
+          paths: path.resolve(__dirname, '../**/*.js'),
+        },
+        plugin: developmentHotReloadPlugin,
       },
     ])
   }

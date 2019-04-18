@@ -11,6 +11,8 @@ import { StaticRouter } from 'react-router-dom'
 import { App } from '../../common/App'
 import { APP_ELEMENT_ID } from '../../common/app-element-id'
 
+const webpackConfig = require('../../../webpack.config')
+
 const PARTIALS_PATH = path.join(__dirname, './partials/')
 
 export const render = (request: Request) => {
@@ -25,6 +27,13 @@ export const render = (request: Request) => {
       </StaticRouter>,
     ),
     intoStream('</div>'),
+    intoStream(
+      `<script src="${
+        process.env.NODE_ENV === 'production'
+          ? webpackConfig.output.publicPath
+          : `//localhost:${process.env.PORT}/`
+      }main.bundle.js"></script>`,
+    ),
     fs.createReadStream(path.join(PARTIALS_PATH, 'footer.html')),
   ]).pipe(pass)
 

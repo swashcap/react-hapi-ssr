@@ -1,6 +1,7 @@
 module.exports = {
   devServer: {
     hotOnly: true,
+    publicPath: '/dist/',
   },
   devtool: 'source-map',
   entry: './src/client/index.tsx',
@@ -20,7 +21,7 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    publicPath: '/assets/',
+    publicPath: '/dist/',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],

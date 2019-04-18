@@ -59,27 +59,6 @@ const init = async () => {
 
   server.route(publicDir)
 
-  /**
-   * Custom 404 page:
-   * {@link https://github.com/hapijs/inert#customized-file-response}
-   */
-  server.ext('onPreResponse', (request, h) => {
-    const { response } = request
-
-    if (
-      'isBoom' in response &&
-      response.isBoom &&
-      response.output.statusCode === 404
-    ) {
-      return h
-        .response(render(request))
-        .code(404)
-        .type('text/html')
-    }
-
-    return h.continue
-  })
-
   await server.start()
 
   console.log('Server running on', server.info.uri)

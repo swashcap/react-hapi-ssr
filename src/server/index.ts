@@ -58,6 +58,8 @@ export const getServer = async () => {
 
   server.route(publicDir)
 
+  await server.initialize()
+
   return server
 }
 

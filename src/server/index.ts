@@ -11,7 +11,7 @@ import path from 'path'
 
 import { publicDir } from './routes/public-dir'
 import { ssr } from './plugins/ssr'
-import { webpackPlugin } from './plugins/webpack'
+import { developmentWebpackPlugin } from './plugins/development-webpack'
 
 export const getServer = async () => {
   const server = new hapi.Server({
@@ -47,14 +47,18 @@ export const getServer = async () => {
     })
   }
 
-  await Promise.all([
-    server.register(hapiAlive),
-    server.register(inert),
-    server.register(ssr),
-    process.env.NODE_ENV === 'development'
-      ? server.register(webpackPlugin)
-      : undefined,
-  ])
+  await server.register([hapiAlive, inert, ssr])
+
+  if (process.env.NODE_ENV === 'development') {
+    await server.register([
+      {
+        options: {
+          webpackConfig: require('../../webpack.config'),
+        },
+        plugin: developmentWebpackPlugin,
+      },
+    ])
+  }
 
   server.route(publicDir)
 

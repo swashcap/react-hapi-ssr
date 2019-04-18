@@ -31,7 +31,9 @@ export const render = (request: Request) => {
       `<script src="${
         process.env.NODE_ENV === 'production'
           ? webpackConfig.output.publicPath
-          : `//localhost:${process.env.PORT}/`
+          : `//localhost:${process.env.PORT}${
+              webpackConfig.devServer.publicPath
+            }`
       }main.bundle.js"></script>`,
     ),
     fs.createReadStream(path.join(PARTIALS_PATH, 'footer.html')),

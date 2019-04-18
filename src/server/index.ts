@@ -24,7 +24,7 @@ const init = async () => {
     },
   })
 
-  if (process.env.NODE !== 'test') {
+  if (process.env.NODE_ENV !== 'test') {
     await server.register({
       plugin: good,
       options: {

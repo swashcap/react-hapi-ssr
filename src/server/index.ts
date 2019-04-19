@@ -9,7 +9,7 @@ import hapiAlive from 'hapi-alive'
 import inert from 'inert'
 import path from 'path'
 
-import { publicDir } from './routes/public-dir'
+import { buildFiles, publicFiles } from './routes/static-files'
 import { ssr } from './plugins/ssr'
 import { developmentHotReloadPlugin } from './plugins/development-hot-reload'
 import { developmentWebpackPlugin } from './plugins/development-webpack'
@@ -19,11 +19,6 @@ const webpackConfig = require('../../webpack.config')
 export const getServer = async () => {
   const server = new hapi.Server({
     port: process.env.PORT,
-    routes: {
-      files: {
-        relativeTo: path.join(__dirname, '../../public'),
-      },
-    },
   })
 
   if (process.env.NODE_ENV !== 'test') {
@@ -76,9 +71,16 @@ export const getServer = async () => {
         plugin: developmentHotReloadPlugin,
       },
     ])
+  } else {
+    /**
+     * Serve built assets when not in development.
+     *
+     * @todo Use nginx for non-application file serving.
+     */
+    server.route(buildFiles)
   }
 
-  server.route(publicDir)
+  server.route(publicFiles)
 
   await server.initialize()
 

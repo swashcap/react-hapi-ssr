@@ -33,7 +33,7 @@ export const developmentWebpackPlugin: Plugin<
   once: true,
   name: 'development-webpack-plugin',
   register(server, { webpackConfig }) {
-    const compiler = webpack({ mode: 'development', ...webpackConfig })
+    const compiler = webpack(webpackConfig)
     const devMiddleware = webpackDevMiddleware(compiler, {
       logger,
       publicPath: (webpackConfig as any).devServer.publicPath,

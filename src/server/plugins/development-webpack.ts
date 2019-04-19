@@ -23,6 +23,8 @@ const logger = ({
  * Based on hapi-webpack-plugin, this will serve webpack development outputs
  * and webpack hot patches.
  *
+ * @todo Use `server.log`
+ *
  * {@link https://github.com/SimonDegraeve/hapi-webpack-plugin }
  */
 export const developmentWebpackPlugin: Plugin<

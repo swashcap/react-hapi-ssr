@@ -13,6 +13,9 @@ export interface DevelopmentHotReloadPluginOptions {
   paths: Parameters<typeof chokidar.watch>['0']
 }
 
+/**
+ * @todo Use `server.log`
+ */
 export const developmentHotReloadPlugin: Plugin<
   DevelopmentHotReloadPluginOptions
 > = {

@@ -15,27 +15,28 @@ const webpackConfig = require('../../../webpack.config')
 
 const PARTIALS_PATH = path.join(__dirname, './partials/')
 
-export const render = (request: Request) => {
+export interface RendererOptions {
+  afterApp?: intoStream.Input
+  beforeApp?: intoStream.Input
+}
+
+export const getRenderer = (props: RendererOptions = {}) => (
+  request: Request,
+) => {
+  const { afterApp, beforeApp } = props
   const pass = new stream.PassThrough()
 
   multistream([
     fs.createReadStream(path.join(PARTIALS_PATH, 'header.html')),
-    intoStream(`<div id="${APP_ELEMENT_ID}">`),
+    intoStream(beforeApp || ''),
     ReactDOMServer.renderToNodeStream(
-      <StaticRouter location={request.path}>
-        <App />
-      </StaticRouter>,
+      <div id={APP_ELEMENT_ID}>
+        <StaticRouter location={request.path}>
+          <App />
+        </StaticRouter>
+      </div>,
     ),
-    intoStream('</div>'),
-    intoStream(
-      `<script src="${
-        process.env.NODE_ENV === 'production'
-          ? webpackConfig.output.publicPath
-          : `//localhost:${process.env.PORT}${
-              webpackConfig.devServer.publicPath
-            }`
-      }main.bundle.js"></script>`,
-    ),
+    intoStream(afterApp || ''),
     fs.createReadStream(path.join(PARTIALS_PATH, 'footer.html')),
   ]).pipe(pass)
 

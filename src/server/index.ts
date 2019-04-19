@@ -14,6 +14,8 @@ import { ssr } from './plugins/ssr'
 import { developmentHotReloadPlugin } from './plugins/development-hot-reload'
 import { developmentWebpackPlugin } from './plugins/development-webpack'
 
+const webpackConfig = require('../../webpack.config')
+
 export const getServer = async () => {
   const server = new hapi.Server({
     port: process.env.PORT,
@@ -48,13 +50,22 @@ export const getServer = async () => {
     })
   }
 
-  await server.register([hapiAlive, inert, ssr])
+  await server.register([
+    hapiAlive,
+    inert,
+    {
+      options: {
+        webpackConfig,
+      },
+      plugin: ssr,
+    },
+  ])
 
   if (process.env.NODE_ENV === 'development') {
     await server.register([
       {
         options: {
-          webpackConfig: require('../../webpack.config'),
+          webpackConfig,
         },
         plugin: developmentWebpackPlugin,
       },

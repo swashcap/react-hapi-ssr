@@ -73,7 +73,7 @@
     "clean": "./scripts/clean.sh",
     "format": "prettier --write '*.js' '{src,types}/**/*.{ts,tsx}'",
     "start": "node src/server/index.js",
-    "watch": "rm src/server/index.js && run-p watch:*",
+    "watch": "rm -f src/server/index.js && run-p watch:*",
     "watch:server": "wait-on src/server/index.js && yarn start",
     "watch:ts": "tsc -w --preserveWatchOutput",
     "test": "NODE_ENV=test jest"

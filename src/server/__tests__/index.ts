@@ -1,4 +1,4 @@
-import { getServer } from '../index'
+import { getServer } from '../get-server'
 
 test('server renders', async () => {
   const server = await getServer()

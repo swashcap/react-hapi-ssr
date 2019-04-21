@@ -45,16 +45,7 @@ export const getServer = async () => {
     })
   }
 
-  await server.register([
-    hapiAlive,
-    inert,
-    {
-      options: {
-        webpackConfig,
-      },
-      plugin: ssr,
-    },
-  ])
+  await server.register([hapiAlive, inert])
 
   if (process.env.NODE_ENV === 'development') {
     await server.register([
@@ -81,6 +72,17 @@ export const getServer = async () => {
   }
 
   server.route(publicFiles)
+
+  /**
+   * Register after Webpack plugins so the ssr plugin has access to the Webpack
+   * compiler during development.
+   */
+  await server.register({
+    options: {
+      isEnvDevelopment: process.env.NODE_ENV === 'development',
+    },
+    plugin: ssr,
+  })
 
   await server.initialize()
 

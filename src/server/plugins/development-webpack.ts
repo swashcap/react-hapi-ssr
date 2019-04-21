@@ -37,10 +37,23 @@ export const developmentWebpackPlugin: Plugin<
     const devMiddleware = webpackDevMiddleware(compiler, {
       logger,
       publicPath: (webpackConfig as any).devServer.publicPath,
+
+      /**
+       * webpack-dev-middleware mutates `res.locals` with `webpack.Stats` for
+       * last compilation result. This blocks the middleware, but makes it =
+       * possible to get all of the entrypoint names dynamically.
+       *
+       * @todo Look into `webpack.Compiler.hooks` for a non-blocking solution
+       *
+       * {@link https://github.com/webpack/webpack-dev-middleware#server-side-rendering}
+       */
+      serverSideRender: true,
     })
     const hotMiddleware = webpackHotMiddleware(compiler, {
       log: hotLog,
     })
+
+    server.expose('webpackCompiler', compiler)
 
     server.ext({
       method: async ({ raw: { req, res } }, h) => {
@@ -64,6 +77,17 @@ export const developmentWebpackPlugin: Plugin<
             })
           }),
         ])
+
+        /**
+         * Middleware calls `res.end()` when it handles to the request. Tell
+         * hapi to close the listener.
+         *
+         * @todo Make hapi log 200s
+         */
+        if (res.finished) {
+          return h.close
+        }
+
         return h.continue
       },
       type: 'onRequest',

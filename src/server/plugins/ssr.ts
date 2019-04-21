@@ -63,7 +63,7 @@ export const ssr: Plugin<SSRPluginOptions> = {
 
         return renderApp({
           options: {
-            afterApp: scripts,
+            afterFooter: scripts,
             head: stylesheets,
           },
           request,
@@ -83,7 +83,7 @@ export const ssr: Plugin<SSRPluginOptions> = {
       render = request =>
         renderApp({
           options: {
-            afterApp: scripts,
+            afterFooter: scripts,
             head: stylesheets,
           },
           request,

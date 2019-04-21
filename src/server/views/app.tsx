@@ -92,6 +92,9 @@ export const render = ({
     intoStream(getInput(options.beforeFooter)),
     fs.createReadStream(path.join(PARTIALS_PATH, 'footer.html')),
     intoStream(getInput(options.afterFooter)),
+    intoStream(`
+  </body>
+</html>`),
   ]).pipe(pass)
 
   return pass

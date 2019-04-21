@@ -13,18 +13,19 @@ import {
  *
  * @todo Move to util module
  */
-const getHead = (entries: string[]) => {
-  let head = ''
+const getTags = (entries: string[]) => {
+  let stylesheets = ''
+  let scripts = ''
 
   entries.forEach(entry => {
     if (/\.js$/.test(entry)) {
-      head += renderScript(entry)
+      scripts += renderScript(entry)
     } else if (/\.css$/.test(entry)) {
-      head += renderStylesheet(entry)
+      stylesheets += renderStylesheet(entry)
     }
   })
 
-  return head
+  return { scripts, stylesheets }
 }
 
 export type SSRPluginOptions = {
@@ -44,23 +45,26 @@ export const ssr: Plugin<SSRPluginOptions> = {
         const stats = (request.raw.res as any).locals.webpackStats.toJson()
         const prependPublicPath = (x: string) => `${stats.publicPath}${x}`
 
+        const { scripts, stylesheets } = getTags(
+          /**
+           * The hot middleware changes the manifest value to an array and
+           * pushes patches to it.
+           */
+          Object.values(stats.assetsByChunkName as Record<
+            string,
+            string | string[]
+          >).reduce<string[]>((memo, entry) => {
+            if (Array.isArray(entry)) {
+              return [...memo, ...entry.map(prependPublicPath)]
+            }
+            return [...memo, prependPublicPath(entry)]
+          }, []),
+        )
+
         return renderApp({
           options: {
-            head: getHead(
-              /**
-               * The hot middleware changes the manifest value to an array and
-               * pushes patches to it.
-               */
-              Object.values(stats.assetsByChunkName as Record<
-                string,
-                string | string[]
-              >).reduce<string[]>((memo, entry) => {
-                if (Array.isArray(entry)) {
-                  return [...memo, prependPublicPath(entry[0])]
-                }
-                return [...memo, prependPublicPath(entry)]
-              }, []),
-            ),
+            afterApp: scripts,
+            head: stylesheets,
           },
           request,
         })
@@ -74,10 +78,13 @@ export const ssr: Plugin<SSRPluginOptions> = {
         string
       >
 
+      const { scripts, stylesheets } = getTags(Object.values(manifest))
+
       render = request =>
         renderApp({
           options: {
-            head: getHead(Object.values(manifest)),
+            afterApp: scripts,
+            head: stylesheets,
           },
           request,
         })

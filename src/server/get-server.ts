@@ -6,6 +6,7 @@ import inert from 'inert'
 import { buildFiles, publicFiles } from './routes/static-files'
 import { developmentWebpackPlugin } from './plugins/development-webpack'
 import { recordsApi } from './routes/records-api'
+import { recordsDBPlugin } from './plugins/records-db'
 import { ssr } from './plugins/ssr'
 
 export const getServer = async (
@@ -38,21 +39,6 @@ export const getServer = async (
     })
   }
 
-  await server.register([hapiAlive, inert])
-
-  /**
-   * Serve built assets when not in development.
-   *
-   * @todo Use nginx for non-application file serving.
-   */
-  if (!isEnvDevelopment) {
-    server.route(buildFiles)
-  }
-
-  server.route(publicFiles)
-
-  server.route(recordsApi)
-
   if (isEnvDevelopment) {
     await server.register({
       options: {
@@ -61,6 +47,11 @@ export const getServer = async (
       plugin: developmentWebpackPlugin,
     })
   }
+
+  await server.register([hapiAlive, inert, recordsDBPlugin])
+
+  server.route(publicFiles)
+  server.route(recordsApi)
 
   /**
    * Register after Webpack plugins so the ssr plugin has access to the Webpack
@@ -75,6 +66,15 @@ export const getServer = async (
     },
     plugin: ssr,
   })
+
+  /**
+   * Serve built assets when not in development.
+   *
+   * @todo Use nginx for non-application file serving.
+   */
+  if (!isEnvDevelopment) {
+    server.route(buildFiles)
+  }
 
   return server
 }

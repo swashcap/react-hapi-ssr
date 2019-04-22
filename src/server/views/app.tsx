@@ -23,6 +23,7 @@ export interface RendererOptions {
   afterApp?: RendererOption
   afterFooter?: RendererOption
   afterHeader?: RendererOption
+  bodyClass?: RendererOption
   beforeApp?: RendererOption
   beforeFooter?: RendererOption
   beforeHeader?: RendererOption
@@ -77,8 +78,18 @@ export const render = ({
   pieces.push(
     intoStream(`
   </head>
-  <body>`),
+  <body`),
   )
+
+  if (options.bodyClass) {
+    pieces.push(
+      intoStream(' class="'),
+      getStream(options.bodyClass),
+      intoStream('"'),
+    )
+  }
+
+  pieces.push(intoStream('>\n'))
 
   if (options.beforeHeader) {
     pieces.push(getStream(options.beforeHeader))

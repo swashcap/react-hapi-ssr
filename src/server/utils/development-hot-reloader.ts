@@ -1,5 +1,6 @@
 import { Server } from 'hapi'
 import chokidar from 'chokidar'
+import debouncePromise from 'debounce-promise'
 import debug from 'debug'
 
 export interface DevelopmentHotReloaderOptions {
@@ -18,7 +19,7 @@ export const developmentHotReloader = async ({
 }: DevelopmentHotReloaderOptions): Promise<[Server, chokidar.FSWatcher]> => {
   let server = await getServer()
 
-  const onChange = async () => {
+  const onChange = debouncePromise(async () => {
     log('clearing local modules')
     for (const [id] of Object.entries(require.cache)) {
       if (moduleResetPattern.test(id)) {
@@ -34,7 +35,7 @@ export const developmentHotReloader = async ({
 
     log('initializing server')
     await server.start()
-  }
+  }, 250)
 
   if (watcher) {
     return [server, watcher]

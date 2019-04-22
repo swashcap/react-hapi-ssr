@@ -9,6 +9,7 @@
   "private": true,
   "dependencies": {
     "@material/react-typography": "^0.11.0",
+    "debounce-promise": "^3.1.0",
     "debug": "^4.1.1",
     "dotenv-safe": "^6.1.0",
     "good": "^8.1.2",
@@ -32,6 +33,7 @@
     "@babel/preset-typescript": "^7.3.3",
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
+    "@types/debounce-promise": "^3.1.1",
     "@types/debug": "^4.1.4",
     "@types/dotenv-safe": "^5.0.3",
     "@types/hapi": "^18.0.1",

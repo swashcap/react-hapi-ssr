@@ -66,6 +66,9 @@ export const getServer = async (
   await server.register({
     options: {
       isEnvDevelopment,
+      rendererOptions: {
+        bodyClass: 'mdc-typography',
+      },
     },
     plugin: ssr,
   })

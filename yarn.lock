@@ -1020,6 +1020,20 @@
     mkdirp "^0.5.1"
     rimraf "^2.5.2"
 
+"@material/react-typography@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-typography/-/react-typography-0.11.0.tgz#f754179a060e1a66866cf883eff9cd82d2694880"
+  integrity sha512-aEArYx1/QEwDPO+H0NW53ntmdRVrJvFfn2CCZ8mv56t/iGbKHwWE4/AF7AdEq5eYzxpEGKMOPELasQn5b1FuvA==
+  dependencies:
+    "@material/typography" "^0.41.0"
+    classnames "^2.2.6"
+    react "^16.4.2"
+
+"@material/typography@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/typography/-/typography-0.41.0.tgz#645e0199bdba6b09d935352ab2095d07c33ec395"
+  integrity sha512-15dlqSU+9uGcWdg4KXXcmDzTKJPb7/5Z9kmooONb2Laot1uiuntDXQS0yL+U2FYLW5Ros+WVMosDBKFruWx68A==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -2258,6 +2272,11 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
+
+classnames@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+  integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
 
 cli-cursor@^2.0.0, cli-cursor@^2.1.0:
   version "2.1.0"
@@ -6622,7 +6641,7 @@ react-router@5.0.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react@^16.8.6:
+react@^16.4.2, react@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
   integrity sha512-pC0uMkhLaHm11ZSJULfOBqV4tIZkx87ZLvbbQYunNixAAvjnC+snJCg0XQXn9VIsttVsbZP/H/ewzgsd5fxKXw==

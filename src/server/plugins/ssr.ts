@@ -5,6 +5,7 @@ import {
   render as renderApp,
   renderScript,
   renderStylesheet,
+  RendererOptions,
 } from '../views/app'
 
 /**
@@ -30,11 +31,12 @@ const getTags = (entries: string[]) => {
 
 export type SSRPluginOptions = {
   isEnvDevelopment: boolean
+  rendererOptions?: RendererOptions
 }
 
 export const ssr: Plugin<SSRPluginOptions> = {
   name: 'ssr',
-  register(server, { isEnvDevelopment }) {
+  register(server, { isEnvDevelopment, rendererOptions = {} }) {
     let render: (request: Request) => ReturnType<typeof renderApp>
 
     if (isEnvDevelopment) {
@@ -61,8 +63,10 @@ export const ssr: Plugin<SSRPluginOptions> = {
           }, []),
         )
 
+        // TODO: Don't squash `rendererOptions`
         return renderApp({
           options: {
+            ...rendererOptions,
             afterFooter: scripts,
             head: stylesheets,
           },
@@ -83,6 +87,7 @@ export const ssr: Plugin<SSRPluginOptions> = {
       render = request =>
         renderApp({
           options: {
+            ...rendererOptions,
             afterFooter: scripts,
             head: stylesheets,
           },

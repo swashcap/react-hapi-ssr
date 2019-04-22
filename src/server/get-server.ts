@@ -5,6 +5,7 @@ import inert from 'inert'
 
 import { buildFiles, publicFiles } from './routes/static-files'
 import { developmentWebpackPlugin } from './plugins/development-webpack'
+import { recordsApi } from './routes/records-api'
 import { ssr } from './plugins/ssr'
 
 export const getServer = async (
@@ -49,6 +50,8 @@ export const getServer = async (
   }
 
   server.route(publicFiles)
+
+  server.route(recordsApi)
 
   if (isEnvDevelopment) {
     await server.register({

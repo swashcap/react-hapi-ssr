@@ -1,4 +1,5 @@
 import { Plugin, Request, ServerRoute } from 'hapi'
+import boom from 'boom'
 
 import { routes } from '../../common/routes'
 import {
@@ -103,24 +104,26 @@ export const ssr: Plugin<SSRPluginOptions> = {
     })
 
     /**
-     * Custom 404 page:
-     * {@link https://github.com/hapijs/inert#customized-file-response}
+     * Custom 404 route:
+     * {@link https://hapijs.com/tutorials/routing#user-content--404-handling}
      */
-    server.ext('onPreResponse', (request, h) => {
-      const { response } = request
+    server.route({
+      handler(request, h) {
+        if (
+          request.headers.accept &&
+          (request.headers.accept === '*/*' ||
+            request.headers.accept.includes('text.html'))
+        ) {
+          return h
+            .response(render(request))
+            .code(404)
+            .type('text/html')
+        }
 
-      if (
-        'isBoom' in response &&
-        response.isBoom &&
-        response.output.statusCode === 404
-      ) {
-        return h
-          .response(render(request))
-          .code(404)
-          .type('text/html')
-      }
-
-      return h.continue
+        throw boom.notFound()
+      },
+      method: '*',
+      path: '/{any*}',
     })
   },
 }

@@ -14,7 +14,7 @@ export const publicFiles: ServerRoute = {
   handler: {
     directory: {
       index: false,
-      path: path.join(__dirname, '../../../public/'),
+      path: path.join(__dirname, '../../../public/assets/'),
       redirectToSlash: false,
     },
   },

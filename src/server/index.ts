@@ -3,48 +3,31 @@ import dotenvSafe from 'dotenv-safe'
 
 dotenvSafe.config()
 
+import { Server } from 'hapi'
 import path from 'path'
 
 import { getServer } from './get-server'
-import { developmentHotReloadPlugin } from './plugins/development-hot-reload'
-import { developmentWebpackPlugin } from './plugins/development-webpack'
+import { developmentHotReloader } from './utils/development-hot-reloader'
 
-const webpackConfig = require('../../webpack.config')
+const init = async () => {
+  let server: Server
 
-export const init = async () => {
-  const server = await getServer()
-
-  if (process.env.NODE_ENV === 'development') {
-    await server.register([
-      {
-        options: {
-          webpackConfig,
-        },
-        plugin: developmentWebpackPlugin,
-      },
-      {
-        options: {
-          getNewServer: async () => {
-            // Hacks
-            const newServer = await require('./get-server').getServer()
-            return newServer
-          },
-          paths: path.resolve(__dirname, '../**/*.js'),
-        },
-        plugin: developmentHotReloadPlugin,
-      },
-    ])
+  if (process.env.NODE_ENV !== 'development') {
+    server = await getServer()
+    await server.start()
+    return server
   }
 
-  await server.initialize()
+  ;[server] = await developmentHotReloader({
+    getServer: () => require('./get-server').getServer(),
+    watchPath: path.join(__dirname, '../**/*.js'),
+  })
 
   return server
 }
 
 if (require.main === module) {
-  init()
-    .then(server => Promise.all([server, server.start()]))
-    .then(([server]) => {
-      console.log('Server running on', server.info.uri)
-    })
+  init().then(server => {
+    console.log('Server running on', server.info.uri)
+  })
 }

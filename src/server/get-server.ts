@@ -4,12 +4,14 @@ import hapiAlive from 'hapi-alive'
 import inert from 'inert'
 
 import { buildFiles, publicFiles } from './routes/static-files'
+import { developmentWebpackPlugin } from './plugins/development-webpack'
 import { ssr } from './plugins/ssr'
 
-export const getServer = async () => {
-  const server = new hapi.Server({
-    port: process.env.PORT,
-  })
+export const getServer = async (
+  serverOptions: hapi.ServerOptions = { port: process.env.PORT },
+) => {
+  const isEnvDevelopment = process.env.NODE_ENV === 'development'
+  const server = new hapi.Server(serverOptions)
 
   if (process.env.NODE_ENV !== 'test') {
     await server.register({
@@ -42,11 +44,20 @@ export const getServer = async () => {
    *
    * @todo Use nginx for non-application file serving.
    */
-  if (process.env.NODE_ENV !== 'development') {
+  if (!isEnvDevelopment) {
     server.route(buildFiles)
   }
 
   server.route(publicFiles)
+
+  if (isEnvDevelopment) {
+    await server.register({
+      options: {
+        webpackConfig: require('../../webpack.config'),
+      },
+      plugin: developmentWebpackPlugin,
+    })
+  }
 
   /**
    * Register after Webpack plugins so the ssr plugin has access to the Webpack
@@ -54,7 +65,7 @@ export const getServer = async () => {
    */
   await server.register({
     options: {
-      isEnvDevelopment: process.env.NODE_ENV === 'development',
+      isEnvDevelopment,
     },
     plugin: ssr,
   })

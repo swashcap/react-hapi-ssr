@@ -1170,7 +1170,7 @@
   dependencies:
     "@types/jest-diff" "*"
 
-"@types/joi@*":
+"@types/joi@*", "@types/joi@^14.3.3":
   version "14.3.3"
   resolved "https://registry.yarnpkg.com/@types/joi/-/joi-14.3.3.tgz#f251aa8150fc0b6a7ce9feab21802a28473de335"
   integrity sha512-6gAT/UkIzYb7zZulAbcof3lFxpiD5EI6xBeTvkL1wYN12pnFQ+y/+xl9BvnVgxkmaIDN89xWhGZLD9CvuOtZ9g==
@@ -4820,6 +4820,11 @@ kleur@^3.0.2:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
+last-one-wins@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/last-one-wins/-/last-one-wins-1.0.4.tgz#c1bfd0cbcb46790ec9156b8d1aee8fcb86cda22a"
+  integrity sha1-wb/Qy8tGeQ7JFWuNGu6Py4bNoio=
+
 lcid@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/lcid/-/lcid-2.0.0.tgz#6ef5d2df60e52f82eb228a4c373e8d1f397253cf"
@@ -7693,6 +7698,14 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
+
+toiletdb@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/toiletdb/-/toiletdb-2.0.0.tgz#89b6de8f2bce8c2b028362fb09597603f0120586"
+  integrity sha512-je7o3XlGbVYejGl02L4iz5kwTwh/m1TvP291OtgHc6E8qyjwHZXhNUR6ACV/9bBa+SPMkRL3c9su/UMm0IYkRQ==
+  dependencies:
+    debug "^4.1.1"
+    last-one-wins "^1.0.4"
 
 topo@3.x.x:
   version "3.0.3"

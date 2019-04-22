@@ -33,13 +33,12 @@ export interface RendererOptions {
 
 const unwrap = (request: Request) => (
   rendererOption?: RendererOption,
-): Promise<intoStream.Input> | intoStream.Input => {
-  if (rendererOption instanceof Function) {
-    return rendererOption(request)
-  }
-
-  return rendererOption || ''
-}
+): ReturnType<typeof intoStream> =>
+  intoStream(
+    rendererOption instanceof Function
+      ? rendererOption(request)
+      : rendererOption || '',
+  )
 
 export const renderScript = (src: string) => `<script src="${src}"></script>\n`
 
@@ -53,34 +52,49 @@ export const render = ({
   options?: RendererOptions
   request: Request
 }) => {
-  const getInput = unwrap(request)
+  const getStream = unwrap(request)
   const pass = new stream.PassThrough()
-
-  multistream([
+  const pieces: multistream.Streams = [
     intoStream(`<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <title>`),
-    intoStream(getInput(options.title)),
+    getStream(options.title),
     intoStream(`</title>
     <meta name="description" content="`),
-    intoStream(getInput(options.description)),
+    getStream(options.description),
     intoStream(`">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="icon" href="/assets/favicon.ico">
-    <link rel="apple-touch-icon" href="/assets/icon.png">
- `),
-    intoStream(getInput(options.head)),
+    <link rel="apple-touch-icon" href="/assets/icon.png">`),
+  ]
+
+  if (options.head) {
+    pieces.push(getStream(options.head))
+  }
+
+  pieces.push(
     intoStream(`
   </head>
-  <body>
-`),
-    intoStream(getInput(options.beforeHeader)),
-    fs.createReadStream(path.join(PARTIALS_PATH, 'header.html')),
-    intoStream(getInput(options.afterHeader)),
-    intoStream(getInput(options.beforeApp)),
+  <body>`),
+  )
+
+  if (options.beforeHeader) {
+    pieces.push(getStream(options.beforeHeader))
+  }
+
+  pieces.push(fs.createReadStream(path.join(PARTIALS_PATH, 'header.html')))
+
+  if (options.afterHeader) {
+    pieces.push(getStream(options.afterHeader))
+  }
+
+  if (options.beforeApp) {
+    pieces.push(getStream(options.beforeApp))
+  }
+
+  pieces.push(
     ReactDOMServer.renderToNodeStream(
       <div id={APP_ELEMENT_ID}>
         <StaticRouter location={request.path}>
@@ -88,14 +102,29 @@ export const render = ({
         </StaticRouter>
       </div>,
     ),
-    intoStream(getInput(options.afterApp)),
-    intoStream(getInput(options.beforeFooter)),
-    fs.createReadStream(path.join(PARTIALS_PATH, 'footer.html')),
-    intoStream(getInput(options.afterFooter)),
+  )
+
+  if (options.afterApp) {
+    pieces.push(getStream(options.afterApp))
+  }
+
+  if (options.beforeFooter) {
+    pieces.push(getStream(options.beforeFooter))
+  }
+
+  pieces.push(fs.createReadStream(path.join(PARTIALS_PATH, 'footer.html')))
+
+  if (options.afterFooter) {
+    pieces.push(getStream(options.afterFooter))
+  }
+
+  pieces.push(
     intoStream(`
   </body>
 </html>`),
-  ]).pipe(pass)
+  )
+
+  multistream(pieces).pipe(pass)
 
   return pass
 }

@@ -5,7 +5,7 @@ export interface Todo {
   isComplete: boolean
 }
 
-export interface TodosDatabase {
+export interface TodosService {
   create(key: string, value: Todo): Promise<Todo>
   delete(key: string): Promise<Todo>
   readAll(): Promise<Record<string, Todo>>
@@ -21,7 +21,7 @@ export class TodoExistsError extends Error {
   static code = 'ETODOEXISTS'
 }
 
-export const getTodosDatabase = async (...args: Parameters<typeof toilet>) => {
+export const getTodosService = async (...args: Parameters<typeof toilet>) => {
   const db = toilet<Todo>(...args)
 
   await db.open()
@@ -38,7 +38,7 @@ export const getTodosDatabase = async (...args: Parameters<typeof toilet>) => {
     return value
   }
 
-  const todosDatabase: TodosDatabase = {
+  const todosDatabase: TodosService = {
     async create(key, value) {
       if (await hasKey(key)) {
         throw new TodoExistsError(`${key} already exists`)

@@ -3,7 +3,8 @@ import boom from 'boom'
 import joi from 'joi'
 import uuidv4 from 'uuid/v4'
 
-import { TodoNotFoundError, TodosDatabase, Todo } from '../utils/todos-db'
+import { TodoNotFoundError, Todo } from '../utils/todos-service'
+import { getService } from '../plugins/todos-service'
 
 const BASE_PATH = '/api/todos'
 
@@ -26,12 +27,12 @@ const validatePayload: Record<keyof Todo, joi.AnySchema> = {
 
 export const apiTodosRoutes: ServerRoute[] = [
   {
-    async handler({ params, server: { plugins } }) {
-      const todosDatabase = (plugins as any).todosDBPlugin.db as TodosDatabase
+    async handler({ params, server }) {
+      const service = getService(server)
 
       if (params.id) {
         try {
-          return await todosDatabase.read(params.id)
+          return await service.read(params.id)
         } catch (error) {
           throw error instanceof TodoNotFoundError
             ? boom.notFound('Todo not found', error)
@@ -39,7 +40,7 @@ export const apiTodosRoutes: ServerRoute[] = [
         }
       }
 
-      return todosDatabase.readAll()
+      return service.readAll()
     },
     method: 'GET',
     options: {
@@ -57,10 +58,8 @@ export const apiTodosRoutes: ServerRoute[] = [
     path: `${BASE_PATH}/{id?}`,
   },
   {
-    handler({ payload, server: { plugins } }) {
-      const todosDatabase = (plugins as any).todosDBPlugin.db as TodosDatabase
-
-      return todosDatabase.create(uuidv4(), payload as Todo)
+    handler({ payload, server }) {
+      return getService(server).create(uuidv4(), payload as Todo)
     },
     method: 'POST',
     options: {
@@ -74,11 +73,11 @@ export const apiTodosRoutes: ServerRoute[] = [
     path: BASE_PATH,
   },
   {
-    async handler({ params: { id }, payload, server: { plugins } }) {
-      const todosDatabase = (plugins as any).todosDBPlugin.db as TodosDatabase
+    async handler({ params: { id }, payload, server }) {
+      const service = getService(server)
 
       try {
-        return await todosDatabase.update(id, payload as Todo)
+        return await service.update(id, payload as Todo)
       } catch (error) {
         throw error instanceof TodoNotFoundError
           ? boom.badData('Todo not found', error)
@@ -105,11 +104,11 @@ export const apiTodosRoutes: ServerRoute[] = [
     path: `${BASE_PATH}/{id}`,
   },
   {
-    async handler({ params: { id }, server: { plugins } }) {
-      const todosDatabase = (plugins as any).todosDBPlugin.db as TodosDatabase
+    async handler({ params: { id }, server }) {
+      const service = getService(server)
 
       try {
-        return await todosDatabase.delete(id)
+        return await service.delete(id)
       } catch (error) {
         throw error instanceof TodoNotFoundError
           ? boom.badRequest('Todo not found', error)

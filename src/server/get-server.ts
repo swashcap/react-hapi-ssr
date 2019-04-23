@@ -6,7 +6,7 @@ import inert from 'inert'
 import { buildFiles, publicFiles } from './routes/static-files'
 import { developmentWebpackPlugin } from './plugins/development-webpack'
 import { apiTodosRoutes } from './routes/api-todos'
-import { todosDBPlugin } from './plugins/todos-db'
+import { todosServicePlugin } from './plugins/todos-service'
 import { ssr } from './plugins/ssr'
 
 export const getServer = async (
@@ -48,7 +48,7 @@ export const getServer = async (
     })
   }
 
-  await server.register([hapiAlive, inert, todosDBPlugin])
+  await server.register([hapiAlive, inert, todosServicePlugin])
 
   server.route(publicFiles)
   server.route(apiTodosRoutes)

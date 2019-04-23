@@ -5,8 +5,8 @@ import inert from 'inert'
 
 import { buildFiles, publicFiles } from './routes/static-files'
 import { developmentWebpackPlugin } from './plugins/development-webpack'
-import { recordsApi } from './routes/records-api'
-import { recordsDBPlugin } from './plugins/records-db'
+import { apiTodosRoutes } from './routes/api-todos'
+import { todosDBPlugin } from './plugins/todos-db'
 import { ssr } from './plugins/ssr'
 
 export const getServer = async (
@@ -48,10 +48,10 @@ export const getServer = async (
     })
   }
 
-  await server.register([hapiAlive, inert, recordsDBPlugin])
+  await server.register([hapiAlive, inert, todosDBPlugin])
 
   server.route(publicFiles)
-  server.route(recordsApi)
+  server.route(apiTodosRoutes)
 
   /**
    * Register after Webpack plugins so the ssr plugin has access to the Webpack

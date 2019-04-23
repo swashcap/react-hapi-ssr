@@ -3,44 +3,48 @@ import boom from 'boom'
 import joi from 'joi'
 import uuidv4 from 'uuid/v4'
 
-import {
-  AppRecordNotFoundError,
-  AppRecordDatabase,
-  AppRecord,
-} from '../utils/records-db'
+import { TodoNotFoundError, TodosDatabase, Todo } from '../utils/todos-db'
 
-const BASE_PATH = '/api/record'
+const BASE_PATH = '/api/todos'
 
 const validateHeaders = joi
   .object({
-    'record-client-type': joi
+    'todos-client-type': joi
       .string()
       .valid('android', 'ios', 'web')
       .required(),
   })
   .unknown()
 
-export const recordsApi: ServerRoute[] = [
+const validatePayload: Record<keyof Todo, joi.AnySchema> = {
+  description: joi
+    .string()
+    .min(2)
+    .required(),
+  isComplete: joi.boolean().required(),
+}
+
+export const apiTodosRoutes: ServerRoute[] = [
   {
     async handler({ params, server: { plugins } }) {
-      const recordsDb = (plugins as any).recordsDBPlugin.db as AppRecordDatabase
+      const todosDatabase = (plugins as any).todosDBPlugin.db as TodosDatabase
 
       if (params.id) {
         try {
-          return await recordsDb.read(params.id)
+          return await todosDatabase.read(params.id)
         } catch (error) {
-          throw error instanceof AppRecordNotFoundError
-            ? boom.notFound('Record not found', error)
+          throw error instanceof TodoNotFoundError
+            ? boom.notFound('Todo not found', error)
             : error
         }
       }
 
-      return recordsDb.readAll()
+      return todosDatabase.readAll()
     },
     method: 'GET',
     options: {
-      description: 'Get record(s)',
-      tags: ['api'],
+      description: 'Get todo(s)',
+      tags: ['api', 'todos'],
       validate: {
         headers: validateHeaders,
         params: {
@@ -54,47 +58,37 @@ export const recordsApi: ServerRoute[] = [
   },
   {
     handler({ payload, server: { plugins } }) {
-      const recordsDb = (plugins as any).recordsDBPlugin.db as AppRecordDatabase
+      const todosDatabase = (plugins as any).todosDBPlugin.db as TodosDatabase
 
-      const appRecord = payload as AppRecord
-
-      return recordsDb.create(uuidv4(), appRecord)
+      return todosDatabase.create(uuidv4(), payload as Todo)
     },
     method: 'POST',
     options: {
-      description: 'Create a record',
-      tags: ['api'],
+      description: 'Create a todo',
+      tags: ['api', 'todos'],
       validate: {
         headers: validateHeaders,
-        payload: {
-          content: joi.string().required(),
-          order: joi
-            .number()
-            .min(0)
-            .required(),
-        },
+        payload: validatePayload,
       },
     },
     path: BASE_PATH,
   },
   {
     async handler({ params: { id }, payload, server: { plugins } }) {
-      const recordsDb = (plugins as any).recordsDBPlugin.db as AppRecordDatabase
-
-      const appRecord = payload as AppRecord
+      const todosDatabase = (plugins as any).todosDBPlugin.db as TodosDatabase
 
       try {
-        return await recordsDb.update(id, appRecord)
+        return await todosDatabase.update(id, payload as Todo)
       } catch (error) {
-        throw error instanceof AppRecordNotFoundError
-          ? boom.badData('Record not found', error)
+        throw error instanceof TodoNotFoundError
+          ? boom.badData('Todo not found', error)
           : error
       }
     },
     method: 'PUT',
     options: {
-      description: 'Update a record',
-      tags: ['api'],
+      description: 'Update a todo',
+      tags: ['api', 'todos'],
       validate: {
         headers: validateHeaders,
         params: {
@@ -105,33 +99,27 @@ export const recordsApi: ServerRoute[] = [
             })
             .required(),
         },
-        payload: {
-          content: joi.string().required(),
-          order: joi
-            .number()
-            .min(0)
-            .required(),
-        },
+        payload: validatePayload,
       },
     },
     path: `${BASE_PATH}/{id}`,
   },
   {
     async handler({ params: { id }, server: { plugins } }) {
-      const recordsDb = (plugins as any).recordsDBPlugin.db as AppRecordDatabase
+      const todosDatabase = (plugins as any).todosDBPlugin.db as TodosDatabase
 
       try {
-        return await recordsDb.delete(id)
+        return await todosDatabase.delete(id)
       } catch (error) {
-        throw error instanceof AppRecordNotFoundError
-          ? boom.badRequest('Record not found', error)
+        throw error instanceof TodoNotFoundError
+          ? boom.badRequest('Todo not found', error)
           : error
       }
     },
     method: 'DELETE',
     options: {
-      description: 'Delete a record',
-      tags: ['api'],
+      description: 'Delete a todo',
+      tags: ['api', 'todos'],
       validate: {
         headers: validateHeaders,
         params: {

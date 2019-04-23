@@ -11,9 +11,9 @@ export interface RecordsDBPluginOptions {
 const DEFAULT_PATH = path.join(os.tmpdir(), 'toilet.json')
 
 export const recordsDBPlugin: Plugin<RecordsDBPluginOptions> = {
-  name: 'records-db-plugin',
+  name: 'recordsDBPlugin',
   async register(server, { pathToJSON = DEFAULT_PATH }) {
     const recordsDb = await getRecordsDb(pathToJSON)
-    server.expose('recordsDb', recordsDb)
+    server.expose('db', recordsDb)
   },
 }

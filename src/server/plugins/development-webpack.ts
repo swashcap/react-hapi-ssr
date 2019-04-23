@@ -31,7 +31,7 @@ export const developmentWebpackPlugin: Plugin<
   DevelopmentWebpackPluginOptions
 > = {
   once: true,
-  name: 'development-webpack-plugin',
+  name: 'developmentWebpackPlugin',
   register(server, { webpackConfig }) {
     const compiler = webpack(webpackConfig)
     const devMiddleware = webpackDevMiddleware(compiler, {
@@ -53,7 +53,7 @@ export const developmentWebpackPlugin: Plugin<
       log: hotLog,
     })
 
-    server.expose('webpackCompiler', compiler)
+    server.expose('compiler', compiler)
 
     server.ext({
       method: async ({ raw: { req, res } }, h) => {

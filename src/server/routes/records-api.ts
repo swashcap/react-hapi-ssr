@@ -14,8 +14,7 @@ const BASE_PATH = '/api/record'
 export const recordsApi: ServerRoute[] = [
   {
     async handler({ params, server: { plugins } }) {
-      const recordsDb = (plugins as any)['records-db-plugin']
-        .recordsDb as AppRecordDatabase
+      const recordsDb = (plugins as any).recordsDBPlugin.db as AppRecordDatabase
 
       if (params.id) {
         try {
@@ -43,8 +42,7 @@ export const recordsApi: ServerRoute[] = [
   },
   {
     handler({ payload, server: { plugins } }) {
-      const recordsDb = (plugins as any)['records-db-plugin']
-        .recordsDb as AppRecordDatabase
+      const recordsDb = (plugins as any).recordsDBPlugin.db as AppRecordDatabase
 
       const appRecord = payload as AppRecord
 
@@ -68,8 +66,7 @@ export const recordsApi: ServerRoute[] = [
   },
   {
     async handler({ params: { id }, payload, server: { plugins } }) {
-      const recordsDb = (plugins as any)['records-db-plugin']
-        .recordsDb as AppRecordDatabase
+      const recordsDb = (plugins as any).recordsDBPlugin.db as AppRecordDatabase
 
       const appRecord = payload as AppRecord
 
@@ -102,8 +99,7 @@ export const recordsApi: ServerRoute[] = [
   },
   {
     async handler({ params: { id }, server: { plugins } }) {
-      const recordsDb = (plugins as any)['records-db-plugin']
-        .recordsDb as AppRecordDatabase
+      const recordsDb = (plugins as any).recordsDBPlugin.db as AppRecordDatabase
 
       try {
         return await recordsDb.delete(id)

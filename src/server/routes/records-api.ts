@@ -11,6 +11,15 @@ import {
 
 const BASE_PATH = '/api/record'
 
+const validateHeaders = joi
+  .object({
+    'record-client-type': joi
+      .string()
+      .valid('android', 'ios', 'web')
+      .required(),
+  })
+  .unknown()
+
 export const recordsApi: ServerRoute[] = [
   {
     async handler({ params, server: { plugins } }) {
@@ -33,6 +42,7 @@ export const recordsApi: ServerRoute[] = [
       description: 'Get record(s)',
       tags: ['api'],
       validate: {
+        headers: validateHeaders,
         params: {
           id: joi.string().guid({
             version: ['uuidv4'],
@@ -55,6 +65,7 @@ export const recordsApi: ServerRoute[] = [
       description: 'Create a record',
       tags: ['api'],
       validate: {
+        headers: validateHeaders,
         payload: {
           content: joi.string().required(),
           order: joi
@@ -85,6 +96,7 @@ export const recordsApi: ServerRoute[] = [
       description: 'Update a record',
       tags: ['api'],
       validate: {
+        headers: validateHeaders,
         params: {
           id: joi
             .string()
@@ -121,6 +133,7 @@ export const recordsApi: ServerRoute[] = [
       description: 'Delete a record',
       tags: ['api'],
       validate: {
+        headers: validateHeaders,
         params: {
           id: joi
             .string()

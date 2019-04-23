@@ -34,7 +34,9 @@ export const recordsApi: ServerRoute[] = [
       tags: ['api'],
       validate: {
         params: {
-          id: joi.string(),
+          id: joi.string().guid({
+            version: ['uuidv4'],
+          }),
         },
       },
     },
@@ -84,7 +86,12 @@ export const recordsApi: ServerRoute[] = [
       tags: ['api'],
       validate: {
         params: {
-          id: joi.string().required(),
+          id: joi
+            .string()
+            .guid({
+              version: ['uuidv4'],
+            })
+            .required(),
         },
         payload: {
           content: joi.string().required(),
@@ -115,7 +122,12 @@ export const recordsApi: ServerRoute[] = [
       tags: ['api'],
       validate: {
         params: {
-          id: joi.string().required(),
+          id: joi
+            .string()
+            .guid({
+              version: ['uuidv4'],
+            })
+            .required(),
         },
       },
     },

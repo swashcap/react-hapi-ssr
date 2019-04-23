@@ -1,83 +1,128 @@
 import { ServerRoute } from 'hapi'
+import boom from 'boom'
 import joi from 'joi'
+import uuidv4 from 'uuid/v4'
 
-const recordsApiParamsSchema = () => ({
-  id: joi.string(),
-})
+import {
+  AppRecordNotFoundError,
+  AppRecordDatabase,
+  AppRecord,
+} from '../utils/records-db'
 
-const recordsApiPayloadSchema = () => ({
-  content: joi.string(),
-  order: joi.number().min(0),
-})
-
-const required = (getSchema: () => Record<string, joi.AnySchema>) => {
-  const schema = getSchema()
-
-  for (const [, s] of Object.entries(schema)) {
-    s.required()
-  }
-
-  return schema
-}
+const BASE_PATH = '/api/record'
 
 export const recordsApi: ServerRoute[] = [
   {
-    handler(request, h) {
-      if (request.params.id) {
+    async handler({ params, server: { plugins } }) {
+      const recordsDb = (plugins as any)['records-db-plugin']
+        .recordsDb as AppRecordDatabase
+
+      if (params.id) {
+        try {
+          return await recordsDb.read(params.id)
+        } catch (error) {
+          throw error instanceof AppRecordNotFoundError
+            ? boom.notFound('Record not found', error)
+            : error
+        }
       }
-      return h.continue
+
+      return recordsDb.readAll()
     },
     method: 'GET',
     options: {
       description: 'Get record(s)',
       tags: ['api'],
       validate: {
-        params: recordsApiParamsSchema(),
+        params: {
+          id: joi.string(),
+        },
       },
     },
-    path: '/api/record/{id?}',
+    path: `${BASE_PATH}/{id?}`,
   },
   {
-    handler(request, h) {
-      return h.continue
+    handler({ payload, server: { plugins } }) {
+      const recordsDb = (plugins as any)['records-db-plugin']
+        .recordsDb as AppRecordDatabase
+
+      const appRecord = payload as AppRecord
+
+      return recordsDb.create(uuidv4(), appRecord)
     },
     method: 'POST',
     options: {
       description: 'Create a record',
       tags: ['api'],
       validate: {
-        payload: required(recordsApiPayloadSchema),
+        payload: {
+          content: joi.string().required(),
+          order: joi
+            .number()
+            .min(0)
+            .required(),
+        },
       },
     },
-    path: '/api/record',
+    path: BASE_PATH,
   },
   {
-    handler(request, h) {
-      return h.continue
+    async handler({ params: { id }, payload, server: { plugins } }) {
+      const recordsDb = (plugins as any)['records-db-plugin']
+        .recordsDb as AppRecordDatabase
+
+      const appRecord = payload as AppRecord
+
+      try {
+        return await recordsDb.update(id, appRecord)
+      } catch (error) {
+        throw error instanceof AppRecordNotFoundError
+          ? boom.badData('Record not found', error)
+          : error
+      }
     },
     method: 'PUT',
     options: {
       description: 'Update a record',
       tags: ['api'],
       validate: {
-        params: required(recordsApiParamsSchema),
-        payload: required(recordsApiPayloadSchema),
+        params: {
+          id: joi.string().required(),
+        },
+        payload: {
+          content: joi.string().required(),
+          order: joi
+            .number()
+            .min(0)
+            .required(),
+        },
       },
     },
-    path: '/api/record/{id}',
+    path: `${BASE_PATH}/{id}`,
   },
   {
-    handler(request, h) {
-      return h.continue
+    async handler({ params: { id }, server: { plugins } }) {
+      const recordsDb = (plugins as any)['records-db-plugin']
+        .recordsDb as AppRecordDatabase
+
+      try {
+        return await recordsDb.delete(id)
+      } catch (error) {
+        throw error instanceof AppRecordNotFoundError
+          ? boom.badRequest('Record not found', error)
+          : error
+      }
     },
     method: 'DELETE',
     options: {
       description: 'Delete a record',
       tags: ['api'],
       validate: {
-        params: required(recordsApiParamsSchema),
+        params: {
+          id: joi.string().required(),
+        },
       },
     },
-    path: '/api/record/{id}',
+    path: `${BASE_PATH}/{id}`,
   },
 ]

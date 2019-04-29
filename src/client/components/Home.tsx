@@ -1,7 +1,7 @@
 import React from 'react'
 import { Body1, Headline1 } from '@material/react-typography'
 
-import { Page } from '../components/Page'
+import { Page } from './Page'
 
 export const Home: React.FC = () => (
   <Page>

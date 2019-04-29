@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { hydrate } from 'react-dom'
 
-import { App } from '../common/App'
+import { App } from './components/App'
 import { APP_ELEMENT_ID } from '../common/app-element-id'
 import { configureStore } from './store/configure-store'
 

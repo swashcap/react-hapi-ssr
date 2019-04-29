@@ -1,7 +1,7 @@
 import React from 'react'
 import { Headline1 } from '@material/react-typography'
 
-import { Page } from '../components/Page'
+import { Page } from './Page'
 
 export const NoMatch = () => (
   <Page>

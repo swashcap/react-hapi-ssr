@@ -8,7 +8,7 @@ import stream from 'stream'
 import { Request } from 'hapi'
 import { StaticRouter } from 'react-router-dom'
 
-import { App } from '../../common/App'
+import { App } from '../../client/components/App'
 import { APP_ELEMENT_ID } from '../../common/app-element-id'
 import { configureStore } from '../../client/store/configure-store'
 

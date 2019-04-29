@@ -1,15 +1,11 @@
 {
-  "env": {
-    "test": {
-      "plugins": ["@babel/plugin-transform-runtime"]
-    }
-  },
+  "plugins": ["@babel/plugin-transform-runtime"],
   "presets": [
     [
       "@babel/preset-typescript",
       {
-        allExtensions: true,
-        isTSX: true
+        "allExtensions": true,
+        "isTSX": true
       }
     ],
     "@babel/preset-env",

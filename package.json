@@ -78,8 +78,8 @@
     "postcss-preset-env": "^6.6.0",
     "prettier": "^1.17.0",
     "style-loader": "^0.23.1",
+    "ts-node": "^8.1.0",
     "typescript": "^3.4.3",
-    "wait-on": "^3.2.0",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.0",
     "webpack-dev-middleware": "^3.6.2",
@@ -93,8 +93,7 @@
     "clean": "./scripts/clean.sh",
     "format": "prettier --write '*.js' '{src,types}/**/*.{css,ts,tsx}'",
     "start": "node src/server/index.js",
-    "watch": "rm -f src/server/index.js && run-p watch:*",
-    "watch:server": "wait-on src/server/index.js && yarn start",
+    "watch:server": "ts-node src/server/index.ts",
     "watch:ts": "tsc -w --preserveWatchOutput",
     "test": "NODE_ENV=test jest"
   }

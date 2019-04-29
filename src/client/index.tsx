@@ -4,8 +4,11 @@ import { hydrate } from 'react-dom'
 
 import { App } from '../common/App'
 import { APP_ELEMENT_ID } from '../common/app-element-id'
+import { configureStore } from './store/configure-store'
 
 import './styles.css'
+
+const store = configureStore()
 
 const init = () => {
   const el = document.getElementById(APP_ELEMENT_ID)
@@ -13,7 +16,7 @@ const init = () => {
   if (el) {
     hydrate(
       <BrowserRouter>
-        <App />
+        <App store={store} />
       </BrowserRouter>,
       el,
     )

@@ -10,6 +10,7 @@ import { StaticRouter } from 'react-router-dom'
 
 import { App } from '../../common/App'
 import { APP_ELEMENT_ID } from '../../common/app-element-id'
+import { configureStore } from '../../client/store/configure-store'
 
 const PARTIALS_PATH = path.join(__dirname, './partials/')
 
@@ -109,7 +110,7 @@ export const render = ({
     ReactDOMServer.renderToNodeStream(
       <div id={APP_ELEMENT_ID}>
         <StaticRouter location={request.path}>
-          <App />
+          <App store={configureStore()} />
         </StaticRouter>
       </div>,
     ),

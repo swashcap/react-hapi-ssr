@@ -60,6 +60,7 @@ typings/
 # next.js build output
 .next
 
+scripts/**/*.js
 src/**/*.js
 dist
 .DS_Store

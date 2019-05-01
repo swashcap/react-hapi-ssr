@@ -8,7 +8,7 @@ export interface TodosDBPluginOptions {
   pathToJSON?: string
 }
 
-const DEFAULT_PATH = path.join(os.tmpdir(), 'toilet.json')
+export const DEFAULT_PATH = path.join(os.tmpdir(), 'toilet.json')
 const EXPOSE_KEY = 'service'
 const PLUGIN_NAME = 'todosServicePlugin'
 

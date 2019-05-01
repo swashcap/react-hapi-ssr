@@ -1037,6 +1037,23 @@
   resolved "https://registry.yarnpkg.com/@material/base/-/base-0.41.0.tgz#badadce711b4c25b1eb889a5e7581e32cd07c421"
   integrity sha512-tEyzwBRu3d1H120SfKsDVYZHcqT5lKohh/7cWKR93aAaPDkSvjpKJIjyu2yuSkjpDduVZGzVocYbOvhUKhhzXQ==
 
+"@material/checkbox@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/checkbox/-/checkbox-0.41.0.tgz#7d1dfa0468fd12b32b459741f7d5cd695d4e4c8d"
+  integrity sha512-Zz6e5WRpziO7Z+4rbEs8GHNNBf1UuttniLp6/RvwPSQRaD8G04sdg4HcP/aDCY1KGMwivkuDPc2Bsgs6j+rD7Q==
+  dependencies:
+    "@material/animation" "^0.41.0"
+    "@material/base" "^0.41.0"
+    "@material/ripple" "^0.41.0"
+    "@material/rtl" "^0.40.1"
+    "@material/selection-control" "^0.41.0"
+    "@material/theme" "^0.41.0"
+
+"@material/dom@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/dom/-/dom-0.41.0.tgz#6756865f97bad4c91ee75e69d769d7cdc25398ae"
+  integrity sha512-wOJrMwjPddYXpQFZAIaCLWI3TO/6KU1lxESTBzunni8A4FHQVWhokml5Xt85GqZwmPFeIF2s+D0wfbWyrGBuKQ==
+
 "@material/linear-progress@^0.41.0":
   version "0.41.0"
   resolved "https://registry.yarnpkg.com/@material/linear-progress/-/linear-progress-0.41.0.tgz#f5069d0b98f86c350d8a75c230da743b962854a6"
@@ -1045,6 +1062,29 @@
     "@material/animation" "^0.41.0"
     "@material/base" "^0.41.0"
     "@material/theme" "^0.41.0"
+
+"@material/list@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/list/-/list-0.41.0.tgz#b597fd844c9f5661565129db9103e6a08bf23255"
+  integrity sha512-HhYN0I02CTT8j91c1eeeI+L2KXVKdfzj0Zuapp2SdeCmQZLJO2tu2NYj0W6REBDTVBWBccr12Sn8o71CodEScQ==
+  dependencies:
+    "@material/base" "^0.41.0"
+    "@material/dom" "^0.41.0"
+    "@material/ripple" "^0.41.0"
+    "@material/rtl" "^0.40.1"
+    "@material/shape" "^0.41.0"
+    "@material/theme" "^0.41.0"
+    "@material/typography" "^0.41.0"
+
+"@material/react-checkbox@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-checkbox/-/react-checkbox-0.11.0.tgz#b36117a20874b8d1321480b4e79be572929aec61"
+  integrity sha512-1O0IUSNLyO0IknvfMM6BQeBuU4Vgxqa5aH/3Rbpt1kFQcyIJ18R7GmCiTjlii+EN3oynmNkfy/GN/7ubR118Hw==
+  dependencies:
+    "@material/checkbox" "^0.41.0"
+    "@material/react-ripple" "^0.11.0"
+    classnames "^2.2.6"
+    react "^16.3.2"
 
 "@material/react-linear-progress@^0.11.0":
   version "0.11.0"
@@ -1055,6 +1095,26 @@
     classnames "^2.2.6"
     react "^16.4.2"
 
+"@material/react-list@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-list/-/react-list-0.11.0.tgz#617978642776803c71472df7073f6513560d6bc0"
+  integrity sha512-QkhXy4cTaZrY0hLkBRChpTKVHsUCaVQ83+oyV/hb1QOTrHc8wuSa+2c7KgeOUUnWYSLaad+I+ohvt2qCMXYNoQ==
+  dependencies:
+    "@material/list" "^0.41.0"
+    classnames "^2.2.6"
+    react "^16.4.2"
+
+"@material/react-ripple@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-ripple/-/react-ripple-0.11.0.tgz#db1ed65fd9e8d32792fb1101a4343fe0b18fe486"
+  integrity sha512-ozfuf83aI1IsSw19bjzNJ5WEEN6wb110or96nLbe/pNNCPLmMYmBgLweJIXQS3w8LagaeBec2q+fN8YwoHMi2w==
+  dependencies:
+    "@material/dom" "^0.41.0"
+    "@material/ripple" "^0.41.0"
+    classnames "^2.2.6"
+    react "^16.4.2"
+    utility-types "^3.2.1"
+
 "@material/react-typography@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@material/react-typography/-/react-typography-0.11.0.tgz#f754179a060e1a66866cf883eff9cd82d2694880"
@@ -1063,6 +1123,32 @@
     "@material/typography" "^0.41.0"
     classnames "^2.2.6"
     react "^16.4.2"
+
+"@material/ripple@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/ripple/-/ripple-0.41.0.tgz#73dbb9bf0e1d72382926b39f2527c011e689dde2"
+  integrity sha512-rxEUVWM4AByDlTCH0kkthZQmUuY6eeN0X6cOHBoioFN2vUDk0D0Nfzz/N9FF2AlAf8C2lDDLrTuqnJPVIn+NHA==
+  dependencies:
+    "@material/animation" "^0.41.0"
+    "@material/base" "^0.41.0"
+    "@material/theme" "^0.41.0"
+
+"@material/rtl@^0.40.1":
+  version "0.40.1"
+  resolved "https://registry.yarnpkg.com/@material/rtl/-/rtl-0.40.1.tgz#5b0d973e3c6f8e2ea3656c06ada37ba2fedfa206"
+  integrity sha512-Pk6Iw1/KrhWZoZtkDsPMDUW0bm7Z1zeXb3MTQRCFmjf1wU5cRxgOTtuoZLcJqlcKGppLAzJL/TJV3E7KEiuL0A==
+
+"@material/selection-control@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/selection-control/-/selection-control-0.41.0.tgz#2705d77291c2e6c9db01c4f185a4966d95fd9fa4"
+  integrity sha512-rRHGiZVPoP4nxAAoeqsgTsxz9GwInGs7HIlEhPfMFygmSZVUHHsuOJXSTpOKYi8GCoKHpB0RKZsAtxM0BYAelw==
+  dependencies:
+    "@material/ripple" "^0.41.0"
+
+"@material/shape@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/shape/-/shape-0.41.0.tgz#2b1cb9a9e1240965ae25a107bbd6e29ca0257583"
+  integrity sha512-k1K3CjOVxclfb/0r28cOa2oJpP7QMA2fP0SOS3Vh8ale5Q2jkaHTL60KX8VkHvV6rMqShpXW+60gPjoz5XRbDQ==
 
 "@material/theme@^0.41.0":
   version "0.41.0"
@@ -6760,7 +6846,7 @@ react-router@5.0.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react@^16.4.2, react@^16.8.6:
+react@^16.3.2, react@^16.4.2, react@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
   integrity sha512-pC0uMkhLaHm11ZSJULfOBqV4tIZkx87ZLvbbQYunNixAAvjnC+snJCg0XQXn9VIsttVsbZP/H/ewzgsd5fxKXw==
@@ -8075,6 +8161,11 @@ util@^0.11.0:
   integrity sha512-HShAsny+zS2TZfaXxD9tYj4HQGlBezXZMZuM/S5PKLLoZkShZiGk9o5CzukI1LVHZvjdvZ2Sj1aW/Ndn2NB/HQ==
   dependencies:
     inherits "2.0.3"
+
+utility-types@^3.2.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/utility-types/-/utility-types-3.6.1.tgz#14d0621888c906592d7544414b3762b33a657568"
+  integrity sha512-3MiRraWYaLnIjEbWHQEhuMlPIyjSVPZBlfvulm8xGMSs5nQrP0RiCCGJGvNCi2on8w8B7skRTNJUAGK+8PlbrQ==
 
 uuid@^3.3.2:
   version "3.3.2"

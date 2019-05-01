@@ -69,7 +69,8 @@ export const render = ({
     intoStream(`">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="/assets/favicon.ico">
-    <link rel="apple-touch-icon" href="/assets/icon.png">`),
+    <link rel="apple-touch-icon" href="/assets/icon.png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">`),
   ]
 
   if (options.head) {

@@ -1027,6 +1027,34 @@
     mkdirp "^0.5.1"
     rimraf "^2.5.2"
 
+"@material/animation@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/animation/-/animation-0.41.0.tgz#315b45b32e1aeebee8a4cf555b8ad52076d09ddd"
+  integrity sha512-yYAwJbX3Q2AFd4dr6IYOsWLQy2HN8zWOFVl9AbUXunjzTfJCa/ecfXCriaT6qkmoNoHeTdJHRrsQJZC5GsPvzA==
+
+"@material/base@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/base/-/base-0.41.0.tgz#badadce711b4c25b1eb889a5e7581e32cd07c421"
+  integrity sha512-tEyzwBRu3d1H120SfKsDVYZHcqT5lKohh/7cWKR93aAaPDkSvjpKJIjyu2yuSkjpDduVZGzVocYbOvhUKhhzXQ==
+
+"@material/linear-progress@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/linear-progress/-/linear-progress-0.41.0.tgz#f5069d0b98f86c350d8a75c230da743b962854a6"
+  integrity sha512-yWnJK58QfovYNJXANGfKWcyC5k9IqBFvygYa2EYQSH/MZbIvd84+MIn0fJO9xsRza79BA8Xh2tFIdTFy4+2Ctg==
+  dependencies:
+    "@material/animation" "^0.41.0"
+    "@material/base" "^0.41.0"
+    "@material/theme" "^0.41.0"
+
+"@material/react-linear-progress@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-linear-progress/-/react-linear-progress-0.11.0.tgz#be540ee59f6d43450fc6eb048b892d0d9d41277a"
+  integrity sha512-szRXLujtZZhb21U9iLXKR7R4VpCPzb3rsmN16VIH2bG8gQv895nNTqv60FQaT7GI4jrWvgSKLyeA+c4VYZubmQ==
+  dependencies:
+    "@material/linear-progress" "^0.41.0"
+    classnames "^2.2.6"
+    react "^16.4.2"
+
 "@material/react-typography@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@material/react-typography/-/react-typography-0.11.0.tgz#f754179a060e1a66866cf883eff9cd82d2694880"
@@ -1035,6 +1063,11 @@
     "@material/typography" "^0.41.0"
     classnames "^2.2.6"
     react "^16.4.2"
+
+"@material/theme@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/theme/-/theme-0.41.0.tgz#4f8252a872b17845cc661b867cbbf54e51a26759"
+  integrity sha512-ohW2JxObKOWvP34EkIIcrEVtL3g0Gs/T3/MdOsM36euyshY8Jwl1f6fjVUQvVjSpixUtSb30/+ulblF8fTOwBg==
 
 "@material/typography@^0.41.0":
   version "0.41.0"

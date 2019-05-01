@@ -54,7 +54,6 @@ export interface TodosState {
   ui: {
     error?: Error
     fetched: boolean
-    loading: boolean
   }
 }
 
@@ -63,7 +62,6 @@ const initialState: TodosState = {
   ui: {
     error: undefined,
     fetched: false,
-    loading: false,
   },
 }
 
@@ -77,7 +75,6 @@ export const reducer: Reducer<TodosState, TodosAction> = (
       ui: {
         error: action.payload,
         fetched: true,
-        loading: false,
       },
     }
   } else if (action.type === 'TODOS_READ_ALL_INIT') {
@@ -86,7 +83,6 @@ export const reducer: Reducer<TodosState, TodosAction> = (
       ui: {
         error: undefined,
         fetched: false,
-        loading: true,
       },
     }
   } else if (action.type === 'TODOS_READ_ALL_SUCCESS') {
@@ -95,7 +91,6 @@ export const reducer: Reducer<TodosState, TodosAction> = (
       ui: {
         error: undefined,
         fetched: true,
-        loading: false,
       },
     }
   }

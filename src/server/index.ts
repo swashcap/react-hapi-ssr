@@ -20,7 +20,7 @@ const init = async () => {
 
   ;[server] = await developmentHotReloader({
     getServer: () => require('./get-server').getServer(),
-    watchPath: path.join(__dirname, '../**/*.js'),
+    watchPath: path.join(__dirname, '../**/*.{ts,tsx}'),
   })
 
   return server

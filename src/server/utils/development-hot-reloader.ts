@@ -14,7 +14,7 @@ let watcher: chokidar.FSWatcher | undefined
 
 export const developmentHotReloader = async ({
   getServer,
-  moduleResetPattern = /^((?!node_modules).)*\.ts$/,
+  moduleResetPattern = /^((?!node_modules).)*\.[j|t]sx?$/,
   watchPath,
 }: DevelopmentHotReloaderOptions): Promise<[Server, chokidar.FSWatcher]> => {
   let server = await getServer()

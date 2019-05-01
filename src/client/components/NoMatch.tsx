@@ -1,10 +1,10 @@
 import React from 'react'
-import { Headline1 } from '@material/react-typography'
 
+import { ErrorMessage } from './ErrorMessage'
 import { Page } from './Page'
 
 export const NoMatch = () => (
   <Page>
-    <Headline1>Not found</Headline1>
+    <ErrorMessage title="Not found" />
   </Page>
 )

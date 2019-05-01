@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Headline1 } from '@material/react-typography'
 import List from '@material/react-list'
 
 import { Page } from './Page'
@@ -33,14 +32,11 @@ export const Home = connect(state => state)(
         )
       } else {
         content = (
-          <div>
-            <Headline1>Todos</Headline1>
-            <List>
-              {Object.keys(items).map(id => (
-                <Todo key={id} todo={items[id]} />
-              ))}
-            </List>
-          </div>
+          <List>
+            {Object.keys(items).map(id => (
+              <Todo key={id} todo={items[id]} />
+            ))}
+          </List>
         )
       }
 

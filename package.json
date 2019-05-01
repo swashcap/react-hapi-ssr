@@ -11,6 +11,8 @@
     "@material/react-checkbox": "^0.11.0",
     "@material/react-linear-progress": "^0.11.0",
     "@material/react-list": "^0.11.0",
+    "@material/react-material-icon": "^0.11.0",
+    "@material/react-top-app-bar": "^0.11.0",
     "@material/react-typography": "^0.11.0",
     "boom": "^7.3.0",
     "debounce-promise": "^3.1.0",

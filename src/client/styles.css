@@ -2,3 +2,9 @@
 @import '@material/react-typography/dist/typography.css';
 @import '@material/react-linear-progress/dist/linear-progress.css';
 @import '@material/react-checkbox/dist/checkbox.css';
+@import '@material/react-top-app-bar/dist/top-app-bar.css';
+@import '@material/react-material-icon/dist/material-icon.css';
+
+body {
+  margin: 0;
+}

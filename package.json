@@ -93,7 +93,7 @@
     "clean": "./scripts/clean.sh",
     "format": "prettier --write '*.js' '{src,types}/**/*.{css,ts,tsx}'",
     "start": "node src/server/index.js",
-    "watch:server": "ts-node src/server/index.ts",
+    "watch:server": "ts-node --files src/server/index.ts",
     "watch:ts": "tsc -w --preserveWatchOutput",
     "test": "NODE_ENV=test jest"
   }
